@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+template="/templates/layout.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="empresas">	
+	
+		<h:form id="frmEmpresas">
+		
+			<p:dataTable var="item" value="#{MBEmpresas.itens}" emptyMessage="Sem Registros" paginator="true" rows="20" id="tbEmpresas">
+			
+				<f:facet name="header">Lista de Fornecedores</f:facet>
+		
+			    <p:column headerText="CNPJ" sortBy="#{item.cnpj}">
+			        <h:outputText value="#{item.cnpj}"/>
+			    </p:column> 
+			    <p:column headerText="Descrição" sortBy="#{item.descricao}">
+			            <h:outputText value="#{item.descricao}" />
+			    </p:column>
+			    <p:column headerText="Funcionários" sortBy="#{item.funcionarios}">
+			              <h:outputText value="#{item.funcionarios}" />
+			    </p:column>
+			    <p:column headerText="Fundação" sortBy="#{item.data}">
+			           <h:outputText value="#{item.data}" />
+			    </p:column>
+			    <p:column headerText="Setor" sortBy="#{item.cod_regiao}">
+			           <h:outputText value="#{item.cod_regiao}" />
+			    </p:column>
+			    <p:column headerText="Região" sortBy="#{item.cod_setor}">
+			             <h:outputText value="#{item.cod_setor}" />
+			    </p:column>
+		
+			
+				<f:facet name="footer">
+				   <p:commandButton value="Novo" actionListener="#{MBEmpresas.prepararNovo}"  
+				   oncomplete="PF('dlgEmpNovo').show();" update=":frmEmpNovo:pnEmpNovo" />
+				 </f:facet>
+			    
+			</p:dataTable>
+		</h:form>
+		
+		
+		
+		<p:dialog widgetVar="dlgEmpNovo" closable="false" draggable="false" resizable="false"
+			header="Cadastar Empresas"
+			modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmEmpNovo">
+			
+				<h:panelGrid id="pnEmpNovo" columns="2" cellpadding="5">
+		            
+		            <p:outputLabel value="CNPJ" for="CNPJ" />
+						<h:inputText size="30" maxlength="14" id="CNPJ"
+						value="#{MBEmpresas.empresa.cnpj}" required="false"
+						requiredMessage="O campo CNPJ é obrigatório." />
+		            
+		          	 <p:outputLabel value="Descrição" for="DESC" />
+						<h:inputText size="30" maxlength="99" id="DESC"
+						value="#{MBEmpresas.empresa.descricao}" required="false"
+						requiredMessage="Descrição é Obrigatório" />
+						
+				 	 <p:outputLabel value="Funcionário" for="FUNC" />
+						<h:inputText size="30" maxlength="99" id="FUNC"
+						value="#{MBEmpresas.empresa.funcionarios}" required="false"
+						requiredMessage="Funcionários é Obrigatório" />
+						
+					  <p:outputLabel value="Data Fundação" for="DATA" />	
+						<p:inputMask value="#{MBEmpresas.empresa.data}" id="DATA"  mask="99/99/9999">  
+						   <f:convertDateTime pattern="dd/MM/yyyy"/>  
+						</p:inputMask >
+					
+				       <p:outputLabel for="REG" value="Região" />
+			   	        <p:selectOneMenu id="REG" value="#{MBEmpresas.empresa.cod_regiao}" effect="fold" >
+					            <f:selectItem itemLabel="Selecione" itemValue="" />
+					            <f:selectItems value="#{MBRegioesCombo.regioes}" />
+				        </p:selectOneMenu>
+				            
+	                 	<p:outputLabel for="SEG" value="Segmento" />
+			   	        <p:selectOneMenu id="SEG" value="#{MBEmpresas.empresa.cod_setor}" effect="fold"  >
+	     						<f:selectItem itemLabel="Selecione" itemValue="" />
+					            <f:selectItems value="#{MBSegmentoCombo.segmentos}" />
+				        </p:selectOneMenu>
+		        		
+					<h:panelGrid columns="2">
+						<p:commandButton value="Gravar" 
+						actionListener="#{MBEmpresas.novaEmpresa}" 
+						oncomplete="PF('dlgEmpNovo').hide();" 
+						update="frmEmpresas:tbEmpresas" />
+						
+						<p:commandButton value="Cancelar" 
+						process="@this"
+						onclick="PF('pnEmpNovo').hide();" />
+					</h:panelGrid>		
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:form>  
+    <p:growl id="messages"/>
+    <p:menubar>
+        <p:submenu label="Consulta" icon="pi pi-pencil">
+            <p:menuitem value="Empresa"  url="/SeletivoCoontrol/faces/pages/Empresas.xhtml" icon="pi pi-angle-double-left"  />
+            <p:menuitem value="Regiões" url="/SeletivoCoontrol/faces/pages/Regioes.xhtml" icon="pi pi-angle-double-right" />
+            <p:menuitem value="Segmentos" url="/SeletivoCoontrol/faces/pages/Segmentos.xhtml" icon="pi pi-angle-double-right" />
+        </p:submenu>
+        <p:menuitem value="Questões"  url="/SeletivoCoontrol/faces/pages/Questoes.xhtml"  />
+        <p:menuitem value="Voltar"  url="/SeletivoCoontrol/faces/pages/Index.xhtml"  />
+    </p:menubar>
+</h:form>
+</ui:composition>
